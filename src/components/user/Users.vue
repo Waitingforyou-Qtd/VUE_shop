@@ -184,12 +184,12 @@ export default {
         ],
         // TODO:邮箱📫
         email: [
-          { required: true, message: '请输入📫', trigger: 'blur' },
+          { required: true, message: '请输入邮箱', trigger: 'blur' },
           { validator: checkEmail, trigger: 'blur' }
         ],
         // TODO:电话☎
         mobile: [
-          { required: true, message: '请输入☎', trigger: 'blur' },
+          { required: true, message: '请输入手机号', trigger: 'blur' },
           {
             validator: checkMobile,
             trigger: 'blur'
