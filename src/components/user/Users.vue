@@ -2,7 +2,7 @@
   <div>
     <!-- 面包屑导航区域 -->
     <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
       <el-breadcrumb-item>活动管理</el-breadcrumb-item>
       <el-breadcrumb-item>活动列表</el-breadcrumb-item>
       <el-breadcrumb-item>活动详情</el-breadcrumb-item>
@@ -33,7 +33,7 @@
       </el-row>
       <!-- 用户列表区域 -->
       <el-table :data="userlist" border stripe>
-        <el-table-column type="index"></el-table-column>
+        <el-table-column type="index" label="#"></el-table-column>
         <el-table-column label="姓名" prop="username"></el-table-column>
         <el-table-column label="邮箱" prop="email"></el-table-column>
         <el-table-column label="电话" prop="mobile"></el-table-column>
