@@ -332,17 +332,16 @@ export default {
           }
         )
         if (res.meta.status !== 200) {
-          return this.$message.error('更新用户信息失败')
+          return this.$message.error('更新用户信息失败😭')
         }
-        // 关闭对话框
+        // TODO:关闭对话框
         this.editDialogVisible = false
         // 刷新用户列表
         this.getUserList()
         // 提示修改成功
-        this.$message.success('更新用户信息成功')
+        this.$message.success('更新用户信息成功😍')
       })
     },
-    // 根据id删除对应的用户信息
     async removeUserById(id) {
       // 询问框
       const confirmResult = await this.$confirm(
@@ -356,13 +355,15 @@ export default {
       ).catch(err => err)
       // 如果用户确认删除，则返回字符串 confirm，取消返回 cancel
       if (confirmResult !== 'confirm') {
-        return this.$message.info('已取消删除')
+        return this.$message.info('已取消删除!')
       }
+      // 通过id删除
       const{data:res}=await this.$http.delete('users/'+id)
       if(res.meta.status!==200){
         return this.$message.error('删除用户失败!')
       }
       this.$message.success('删除用户成功!')
+      // 刷新列表
       this.getUserList()
     }
   }
