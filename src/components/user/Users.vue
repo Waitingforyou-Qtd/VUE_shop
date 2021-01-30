@@ -143,7 +143,7 @@ export default {
       cb(new Error('请输入合法的手机号'))
     }
     return {
-      // 获取用户列表的参数对象
+      // TODO:获取用户列表的参数对象
       queryInfo: {
         query: '',
         // 当前的页数
@@ -162,7 +162,7 @@ export default {
         email: '',
         mobile: ''
       },
-      // 添加表单的验证规则对象
+      // TODO:添加表单的验证规则对象
       addFormRules: {
         username: [
           { required: true, message: '请输入用户名', trigger: 'blur' },
@@ -213,17 +213,17 @@ export default {
       this.total = res.data.total
       console.log(res)
     },
-    // 监听 pagesize 改变的事件
+    // TODO: 监听 pagesize 改变的事件
     handleSizeChange(newSize) {
       this.queryInfo.pagesize = newSize
       this.getUserList()
     },
-    // 监听页码值改变的事件
+    // TODO: 监听页码值改变的事件
     handleCurrentChange(newPage) {
       this.queryInfo.pagenum = newPage
       this.getUserList()
     },
-    // 监听switch开关状态的改变
+    // TODO:监听switch开关状态的改变
     async userStateChanged(userinfo) {
       const { data: res } = await this.$http.put(
         `users/${userinfo.id}/state/${userinfo.mg_state}`

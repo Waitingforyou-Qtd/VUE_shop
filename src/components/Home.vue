@@ -24,20 +24,20 @@
           router
           :default-active="activePath"
         >
-          <!-- 一级菜单 -->
+          <!-- TODO:一级菜单 -->
           <el-submenu
             :index="item.id + ''"
             v-for="item in menulist"
             :key="item.id"
           >
-            <!-- 一级菜单的模板区域 -->
+            <!-- TODO:一级菜单的模板区域 -->
             <template slot="title">
               <!-- 一级图标 -->
               <i :class="iconsObj[item.id]"></i>
               <!-- 文本 -->
               <span>{{ item.authName }}</span>
             </template>
-            <!-- 二级菜单 -->
+            <!-- TODO:二级菜单 -->
             <el-menu-item
               :index="'/' + subItem.path"
               v-for="subItem in item.children"
@@ -45,9 +45,9 @@
               @click="saveNavState('/' + subItem.path)"
             >
               <template slot="title">
-                <!-- 图标 -->
+                <!-- TODO:图标 -->
                 <i class="el-icon-s-grid"></i>
-                <!-- 文本 -->
+                <!-- TODO:文本 -->
                 <span>{{ subItem.authName }}</span>
               </template>
             </el-menu-item>
