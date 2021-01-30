@@ -77,8 +77,8 @@ export default {
         102: 'iconfont icon-danju',
         145: 'iconfont icon-baobiao'
       },
-      // 是否折叠
-      isCollapse: !this.isCollapse,
+      //TODO: 侧边栏是否折叠
+      isCollapse: this.isCollapse,
       // 被激活的链接地址
       activePath: ''
     }

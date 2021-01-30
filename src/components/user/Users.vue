@@ -12,12 +12,23 @@
       <!-- 搜索与添加区域 -->
       <el-row :gutter="20">
         <el-col :span="8">
-          <el-input placeholder="请输入内容" v-model="queryInfo.query" clearable @clear="getUserList">
-            <el-button slot="append" icon="el-icon-search" @click="getUserList"></el-button>
+          <el-input
+            placeholder="请输入内容"
+            v-model="queryInfo.query"
+            clearable
+            @clear="getUserList"
+          >
+            <el-button
+              slot="append"
+              icon="el-icon-search"
+              @click="getUserList"
+            ></el-button>
           </el-input>
         </el-col>
         <el-col :span="4">
-          <el-button type="primary" @click="addDialogVisible=true">添加用户</el-button>
+          <el-button type="primary" @click="addDialogVisible = true"
+            >添加用户</el-button
+          >
         </el-col>
       </el-row>
       <!-- 用户列表区域 -->
@@ -29,7 +40,10 @@
         <el-table-column label="角色" prop="role_name"></el-table-column>
         <el-table-column label="状态">
           <template slot-scope="scope">
-            <el-switch v-model="scope.row.mg_state" @change="userStateChanged(scope.row)"></el-switch>
+            <el-switch
+              v-model="scope.row.mg_state"
+              @change="userStateChanged(scope.row)"
+            ></el-switch>
           </template>
         </el-table-column>
         <el-table-column label="操作" width="180px">
@@ -42,10 +56,24 @@
               @click="showEditDialog(scope.row.id)"
             ></el-button>
             <!-- 删除按钮 -->
-            <el-button type="danger" size="mini" icon="el-icon-delete" @click="removeUserById(scope.row.id)"></el-button>
+            <el-button
+              type="danger"
+              size="mini"
+              icon="el-icon-delete"
+              @click="removeUserById(scope.row.id)"
+            ></el-button>
             <!-- 分配角色按钮 -->
-            <el-tooltip effect="dark" content="分配角色" placement="top" :enterable="false">
-              <el-button type="warning" size="mini" icon="el-icon-setting"></el-button>
+            <el-tooltip
+              effect="dark"
+              content="分配角色"
+              placement="top"
+              :enterable="false"
+            >
+              <el-button
+                type="warning"
+                size="mini"
+                icon="el-icon-setting"
+              ></el-button>
             </el-tooltip>
           </template>
         </el-table-column>
@@ -62,9 +90,19 @@
       ></el-pagination>
     </el-card>
     <!-- 添加用户对话框 -->
-    <el-dialog title="添加用户" :visible.sync="addDialogVisible" width="50%" @close="addDialogClosed">
+    <el-dialog
+      title="添加用户"
+      :visible.sync="addDialogVisible"
+      width="50%"
+      @close="addDialogClosed"
+    >
       <!-- 内容主体 -->
-      <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="70px">
+      <el-form
+        :model="addForm"
+        :rules="addFormRules"
+        ref="addFormRef"
+        label-width="70px"
+      >
         <el-form-item label="用户名" prop="username">
           <el-input v-model="addForm.username"></el-input>
         </el-form-item>
@@ -85,15 +123,27 @@
       </span>
     </el-dialog>
     <!-- 修改用户的对话框 -->
-    <el-dialog title="修改用户" :visible.sync="editDialogVisible" width="50%" @close="editDialogClosed">
-      <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="70px">
-        <el-form-item label="用户名">
+    <el-dialog
+      title="修改用户"
+      :visible.sync="editDialogVisible"
+      width="50%"
+      @close="editDialogClosed"
+    >
+    <!-- 验证规则 -->
+      <el-form
+        :model="editForm"
+        :rules="editFormRules"
+        ref="editFormRef"
+        label-width="70px"
+      >
+        <el-form-item label="用户名:">
+          <!-- 双向数据绑定 -->
           <el-input v-model="editForm.username" disabled></el-input>
         </el-form-item>
-        <el-form-item label="邮箱" prop="email">
+        <el-form-item label="邮箱:" prop="email">
           <el-input v-model="editForm.email"></el-input>
         </el-form-item>
-        <el-form-item label="手机" prop="mobile">
+        <el-form-item label="手机号:" prop="mobile">
           <el-input v-model="editForm.mobile"></el-input>
         </el-form-item>
       </el-form>
@@ -175,15 +225,17 @@ export default {
           }
         ]
       },
-      // 控制修改用户对话框的显示与隐藏
+      // TODO:控制修改用户对话框的显示与隐藏
       editDialogVisible: false,
       // 查询到的用户信息对象，即便为空也要写上 editForm，防止报错
       editForm: {},
+      // 修改表单的验证规则对象
       editFormRules: {
         email: [
           { required: true, message: '请输入邮箱', trigger: 'blur' },
           {
             validator: checkEmail,
+            // 失去焦点
             trigger: 'blur'
           }
         ],
@@ -191,6 +243,7 @@ export default {
           { required: true, message: '请输入手机号', trigger: 'blur' },
           {
             validator: checkMobile,
+            // 失去焦点
             trigger: 'blur'
           }
         ]
@@ -237,6 +290,7 @@ export default {
     addDialogClosed() {
       this.$refs.addFormRef.resetFields()
     },
+    // 点击按钮,添加新用户
     addUser() {
       this.$refs.addFormRef.validate(async valid => {
         if (!valid) return false
@@ -251,12 +305,13 @@ export default {
         this.getUserList()
       })
     },
-    // 修改用户
+    // 展示编辑用户的对话框
     async showEditDialog(id) {
       const { data: res } = await this.$http.get('users/' + id)
       if (res.meta.status !== 200) {
         return this.$message.error('查询用户信息失败')
       }
+      // 查询到的信息进行保存
       this.editForm = res.data
       this.editDialogVisible = true
     },
@@ -268,7 +323,7 @@ export default {
     editUserInfo() {
       this.$refs.editFormRef.validate(async valid => {
         if (!valid) return false
-        // 可以发起修改用户信息的数据请求
+        // 发起修改用户信息的数据请求
         const { data: res } = await this.$http.put(
           `users/${this.editForm.id}`,
           {
@@ -288,10 +343,30 @@ export default {
       })
     },
     // 根据id删除对应的用户信息
-    removeUserById(id){}
+    async removeUserById(id) {
+      // 询问框
+      const confirmResult = await this.$confirm(
+        '此操作将永久删除该用户, 是否继续?',
+        '提示',
+        {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }
+      ).catch(err => err)
+      // 如果用户确认删除，则返回字符串 confirm，取消返回 cancel
+      if (confirmResult !== 'confirm') {
+        return this.$message.info('已取消删除')
+      }
+      const{data:res}=await this.$http.delete('users/'+id)
+      if(res.meta.status!==200){
+        return this.$message.error('删除用户失败!')
+      }
+      this.$message.success('删除用户成功!')
+      this.getUserList()
+    }
   }
 }
 </script>
 
-<style lang="less" scoped>
-</style>
+<style lang="less" scoped></style>
