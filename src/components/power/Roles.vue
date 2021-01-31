@@ -186,6 +186,20 @@ export default {
       }
       this.rolelist = res.data
     },
+    // 根据 ID 删除对应的权限
+    async removeRightById() {
+      // 弹框提示是否删除
+      const confirmResult = await this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).catch(err => err)
+      if (confirmResult !== 'confirm') {
+        return this.$message.info('取消了删除')
+      }
+      // 确认了删除
+    },
+  
     // 监听增加角色弹框关闭
     addDialogClosed() {
       this.$refs.addFormRef.resetFields()
