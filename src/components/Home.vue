@@ -3,7 +3,7 @@
     <!-- 头部 -->
     <el-header>
       <div>
-        <img src="../assets/111.png" alt />
+        <img src="../assets/1212313.png" alt />
         <span>河南省***电商后台管理系统</span>
       </div>
       <el-button type="info" @click="logout">退出</el-button>
@@ -78,7 +78,7 @@ export default {
         145: 'iconfont icon-baobiao'
       },
       // 是否折叠
-      isCollapse: !this.isCollapse,
+      isCollapse: this.isCollapse,
       // 被激活的链接地址
       activePath: ''
     }
@@ -93,12 +93,13 @@ export default {
       window.sessionStorage.clear()
       this.$router.push('/login')
     },
-    // 获取所有的菜单
+    // TODO:获取所有的菜单
     async getMenuList() {
       const { data: res } = await this.$http.get('menus')
       if (res.meta.status !== 200) this.$message.error(res.meta.msg)
       this.menulist = res.data
     },
+
     // 切换菜单的折叠与展开
     toggleCollapse() {
       this.isCollapse = !this.isCollapse
@@ -131,14 +132,14 @@ export default {
     span {
       margin-left: 10px;
       font-weight: 900;
-      color: rgb(0, 255, 21)
+      color: rgb(0, 255, 21);
     }
   }
 }
 .el-aside {
   background: linear-gradient(#45a505, #8f0ac4);
   .el-menu {
-    // TODO:去掉右边边框
+    // TODO:去掉右边框
     border-right: 0;
   }
 }

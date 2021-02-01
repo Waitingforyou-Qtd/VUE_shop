@@ -6,6 +6,8 @@ import './plugins/element.js'
 // TODO:导入字体图标
 import './assets/fonts/iconfont.css'
 
+import TreeTable from 'vue-table-with-tree-grid'
+
 // TODO:导入全局样式
 import './assets/css/global.css'
 
@@ -26,6 +28,8 @@ axios.interceptors.response.use(res => {
 Vue.prototype.$http = axios
 
 Vue.config.productionTip = false
+
+Vue.component('tree-table', TreeTable)
 
 new Vue({
   router,
