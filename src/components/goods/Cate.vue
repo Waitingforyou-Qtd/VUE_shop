@@ -17,14 +17,15 @@
       </el-row>
       <!-- 表格区域 -->
       <tree-table
+        class="treeTable"
         :data="catelist"
         :columns="columns"
         :selection-type="false"
+        :expand-type="false"
         show-index
         index-text="#"
         border
         :show-row-hover="false"
-        class="treeTable"
       >
         <!-- 是否有效 -->
         <template slot="isok" slot-scope="scope">
@@ -246,6 +247,7 @@ export default {
           return this.$message.error('添加分类失败')
         }
         this.$message.success('添加分类成功')
+        // 刷新数据列表
         this.getCateList()
         this.addCateDialogVisible = false
       })
