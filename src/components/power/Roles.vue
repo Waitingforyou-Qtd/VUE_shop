@@ -28,9 +28,11 @@
             >
               <!-- 渲染一级权限 -->
               <el-col :span="5">
-                <el-tag @close="removeRightById(scope.row, item1.id)">{{
-                  item1.authName
-                }}</el-tag>
+                <el-tag
+                  closable
+                  @close="removeRightById(scope.row, item1.id)"
+                  >{{ item1.authName }}</el-tag
+                >
                 <i class="el-icon-caret-right"></i>
               </el-col>
               <el-col :span="19">
@@ -41,17 +43,21 @@
                   :key="item2.id"
                 >
                   <el-col :span="6">
-                    <el-tag type="success">{{ item2.authName }}</el-tag>
+                    <el-tag
+                      closable
+                      type="success"
+                      @close="removeRightById(scope.row, item2.id)"
+                      >{{ item2.authName }}</el-tag
+                    >
                     <i class="el-icon-caret-right"></i>
                   </el-col>
                   <el-col :span="18">
                     <!-- 渲染三级权限 -->
                     <el-tag
                       closable
-                      type="warning"
+                      @close="removeRightById(scope.row, item3.id)"
                       v-for="item3 in item2.children"
                       :key="item3.id"
-                      @close="removeRightById(scope.row, item3.id)"
                       >{{ item3.authName }}</el-tag
                     >
                   </el-col>
@@ -61,15 +67,23 @@
           </template>
         </el-table-column>
         <!-- 索引列 -->
-        <el-table-column type="index"></el-table-column>
+        <el-table-column type="index" label="#"></el-table-column>
         <el-table-column label="角色名称" prop="roleName"></el-table-column>
         <el-table-column label="角色描述" prop="roleDesc"></el-table-column>
         <el-table-column label="操作" width="300px">
-          <template>
-            <el-button type="primary" size="mini" icon="el-icon-edit"
+          <template slot-scope="scope">
+            <el-button
+              type="primary"
+              size="mini"
+              icon="el-icon-edit"
+              @click="showEditDialog(scope.row.id)"
               >编辑</el-button
             >
-            <el-button type="danger" size="mini" icon="el-icon-delete"
+            <el-button
+              type="danger"
+              size="mini"
+              icon="el-icon-delete"
+              @click="removeUserById(scope.row.id)"
               >删除</el-button
             >
             <el-button type="warning" size="mini" icon="el-icon-setting"
@@ -182,6 +196,33 @@ export default {
         return this.$message.error('获取角色列表失败')
       }
       this.rolelist = res.data
+    },
+    // 根据 ID 删除对应的权限
+    async removeRightById(role, rightId) {
+      // 弹框提示是否删除
+      const confirmResult = await this.$confirm(
+        '此操作将永久删除该文件, 是否继续?',
+        '提示',
+        {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }
+      ).catch(err => err)
+      if (confirmResult !== 'confirm') {
+        return this.$message.info('取消了删除')
+      }
+      // 确认了删除
+      // 角色ID、权限ID
+      const { data: res } = await this.$http.delete(
+        `roles/${role.id}/rights/${rightId}`
+      )
+      if (res.meta.status !== 200) {
+        return this.$message.error('删除权限失败')
+      }
+      // 这样会发生完整渲染，导致收起
+      // this.getRolesList()
+      role.children = res.data
     },
     // 监听增加角色弹框关闭
     addDialogClosed() {
