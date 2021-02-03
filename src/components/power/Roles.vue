@@ -286,11 +286,11 @@ export default {
     setRightDialogClosed() {
       this.defKeys = []
     },
-    // 监听增加角色弹框关闭
+    //TODO: 监听增加角色弹框关闭
     addDialogClosed() {
       this.$refs.addFormRef.resetFields()
     },
-    // 增加角色信息
+    //TODO: 增加角色信息
     addRolesInfo() {
       this.$refs.addFormRef.validate(async valid => {
         if (!valid) return false
@@ -305,7 +305,7 @@ export default {
         this.getRolesList()
       })
     },
-    // 点击编辑角色按钮
+    //TODO: 点击编辑角色按钮
     async showEditDialog(id) {
       const { data: res } = await this.$http.get('roles/' + id)
       if (res.meta.status !== 200) {
@@ -315,11 +315,11 @@ export default {
       console.log(this.editForm)
       this.editDialogVisible = true
     },
-    // 监听编辑角色弹框关闭
+    // TODO:监听编辑角色弹框关闭
     editDialogClosed() {
       this.$refs.editFormRef.resetFields()
     },
-    // 编辑角色信息
+    // TODO:编辑角色信息
     editRolesInfo() {
       this.$refs.editFormRef.validate(async valid => {
         if (!valid) return false
@@ -342,7 +342,7 @@ export default {
         this.$message.success('更新角色信息成功')
       })
     },
-    // 根据 ID 删除对应的角色
+    // TODO:根据 ID 删除对应的角色
     async removeUserById(id) {
       // 询问框
       const confirmResult = await this.$confirm(
