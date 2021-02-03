@@ -86,13 +86,42 @@
               @click="removeUserById(scope.row.id)"
               >删除</el-button
             >
-            <el-button type="warning" size="mini" icon="el-icon-setting"
+            <el-button
+              type="warning"
+              size="mini"
+              icon="el-icon-setting"
+              @click="showSetRightDialog(scope.row)"
               >分配权限</el-button
             >
           </template>
         </el-table-column>
       </el-table>
     </el-card>
+
+    <!-- 分配权限对话框 -->
+    <el-dialog
+      title="分配权限"
+      :visible.sync="setRightDialogVisible"
+      width="50%"
+      @close="setRightDialogClosed"
+    >
+      <!-- 树形控件 -->
+      <el-tree
+        :data="rightsList"
+        :props="treeProps"
+        show-checkbox
+        node-key="id"
+        default-expand-all
+        :default-checked-keys="defKeys"
+      ></el-tree>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="setRightDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="setRightDialogVisible = false"
+          >确 定</el-button
+        >
+      </span>
+    </el-dialog>
+
     <!-- 增加角色 -->
     <el-dialog
       title="添加角色"
@@ -155,6 +184,13 @@ export default {
       // 控制分配权限对话框的显示与隐藏
       setRightDialogVisible: false,
       rightsList: [],
+      // 树形控件的树形绑定对象
+      treeProps: {
+        label: 'authName',
+        children: 'children' //通过 children 树形实现父子节点的嵌套
+      },
+      // 默认选中的ID值
+      defKeys: [105, 116],
       // 增加角色三件套
       addDialogVisible: false,
       addForm: {
@@ -222,7 +258,33 @@ export default {
       }
       // 这样会发生完整渲染，导致收起
       // this.getRolesList()
+      // 重新赋值
       role.children = res.data
+    },
+    // 展示分配权限的对话框
+    async showSetRightDialog(role) {
+      // 获取所有权限的数据
+      const { data: res } = await this.$http.get('rights/tree')
+      if (res.meta.status !== 200) {
+        return this.$message.error('获取权限数据失败')
+      }
+      this.rightsList = res.data
+      // 递归存储三级节点的 ID
+      this.getLeafKeys(role, this.defKeys)
+      this.setRightDialogVisible = true
+    },
+    // 通过递归的形式，获取角色下所有三级权限的 ID，并保存到 defKeys 中
+    getLeafKeys(node, arr) {
+      if (!node.children) {
+        // 没有 children 证明这儿就是三级节点
+        return arr.push(node.id)
+      }
+      node.children.forEach(item => this.getLeafKeys(item, arr))
+    },
+
+    // 监听分配权限对话框的关闭事件
+    setRightDialogClosed() {
+      this.defKeys = []
     },
     // 监听增加角色弹框关闭
     addDialogClosed() {
