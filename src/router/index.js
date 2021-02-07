@@ -57,7 +57,6 @@ const routes = [
         component: GoodsList
       },
       {
-        // 注意这种写法和直接把 /add 当做 /goods 的子路由是不一样的
         path: '/goods/add',
         component: Add
       }

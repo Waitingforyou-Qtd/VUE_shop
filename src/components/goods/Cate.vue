@@ -1,12 +1,12 @@
 <template>
   <div>
-    <!-- 面包屑导航区域 -->
+    <!--TODO: 面包屑导航区域 -->
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
       <el-breadcrumb-item>商品管理</el-breadcrumb-item>
       <el-breadcrumb-item>商品分类</el-breadcrumb-item>
     </el-breadcrumb>
-    <!-- 卡片视图区域 -->
+    <!--TODO: 卡片视图区域 -->
     <el-card>
       <el-row>
         <el-col>
@@ -15,7 +15,7 @@
           >
         </el-col>
       </el-row>
-      <!-- 表格区域 -->
+      <!--TODO: 表格区域 -->
       <tree-table
         class="treeTable"
         :data="catelist"
@@ -27,7 +27,7 @@
         border
         :show-row-hover="false"
       >
-        <!-- 是否有效 -->
+        <!--TODO: 是否有效 -->
         <template slot="isok" slot-scope="scope">
           <i
             class="el-icon-success"
@@ -36,7 +36,7 @@
           ></i>
           <i class="el-icon-error" v-else style="color: red;"></i>
         </template>
-        <!-- 排序 -->
+        <!--TODO: 排序 -->
         <template slot="order" slot-scope="scope">
           <el-tag size="mini" v-if="scope.row.cat_level === 0">一级</el-tag>
           <el-tag
@@ -47,7 +47,7 @@
           >
           <el-tag type="warning" size="mini" v-else>三级</el-tag>
         </template>
-        <!-- 操作 -->
+        <!--TODO: 操作 -->
         <template slot="opt">
           <el-button type="primary" icon="el-icon-edit" size="mini"
             >编辑</el-button
@@ -57,7 +57,7 @@
           >
         </template>
       </tree-table>
-      <!-- 分页区域 -->
+      <!--TODO: 分页区域 -->
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
@@ -68,14 +68,14 @@
         :total="total"
       ></el-pagination>
     </el-card>
-    <!-- 添加分类的对话框 -->
+    <!--TODO: 添加分类的对话框 -->
     <el-dialog
       title="添加分类"
       :visible.sync="addCateDialogVisible"
       width="50%"
       @close="addCateDialogClosed"
     >
-      <!-- 添加分类表单 -->
+      <!--TODO: 添加分类表单 -->
       <el-form
         :model="addCateForm"
         :rules="addCateFormRules"
@@ -86,9 +86,9 @@
           <el-input v-model="addCateForm.cat_name"></el-input>
         </el-form-item>
         <el-form-item label="父级分类：">
-          <!-- options: 指定数据源 -->
-          <!-- props: 用来指定配置对象 -->
-          <!-- change-on-select: 允许选择一级分类 -->
+          <!--TODO: options: 指定数据源 -->
+          <!--TODO: props: 用来指定配置对象 -->
+          <!--TODO:change-on-select: 允许选择一级分类 -->
           <el-cascader
             expand-trigger="hover"
             :options="parentCateList"
