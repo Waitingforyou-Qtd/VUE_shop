@@ -350,11 +350,11 @@ export default {
         return this.$message.error('获取权限数据失败')
       }
       this.rightsList = res.data
-      //FIXME:  递归存储三级节点的 ID
+      // 递归存储三级节点的 ID
       this.getLeafKeys(role, this.defKeys)
       this.setRightDialogVisible = true
     },
-    //FIXME:  通过递归的形式，获取角色下所有三级权限的 ID，并保存到 defKeys 中
+    // 通过递归的形式，获取角色下所有三级权限的 ID，并保存到 defKeys 中
     getLeafKeys(node, arr) {
       if (!node.children) {
         // 没有 children 证明这儿就是三级节点
@@ -365,8 +365,9 @@ export default {
     // 监听分配权限对话框的关闭事件
     setRightDialogClosed() {
       this.defKeys = []
+      S
     },
-    //:TODO: 点击为角色分配权限
+    //TODO: 点击为角色分配权限
     async allotRights() {
       const keys = [
         ...this.$refs.treeRef.getCheckedKeys(),
@@ -383,7 +384,7 @@ export default {
         return this.$message.error('分配权限失败!')
       }
       this.$message.success('分配权限成功!')
-      //:FIXME: 重新渲染整个角色列表
+      // 重新渲染整个角色列表
       this.getRolesList()
       this.setRightDialogVisible = false
     }

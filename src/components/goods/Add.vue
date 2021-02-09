@@ -217,6 +217,7 @@ export default {
             }
           }
         )
+        
         if (res.meta.status !== 200) {
           return this.$message.error('获取动态参数列表失败')
         }
