@@ -4,7 +4,7 @@
     <el-header>
       <div>
         <img src="../assets/1212313.png" alt />
-        <span>河南省***电商后台管理系统</span>
+        <span>***电商后台管理系统***</span>
       </div>
       <el-button type="info" @click="logout" style="background: red;color:blue; cursor: pointer;">退出</el-button>
     </el-header>
